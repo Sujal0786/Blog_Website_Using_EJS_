@@ -1,0 +1,54 @@
+<div class="author">
+  <h1 class="author__heading">Write, Share, Inspire -</h1>
+  <p class="author__body">Your Blog, Your Space.</p>
+</div>
+
+<img src="/img/hero-image.webp" alt="person looking out through window" class="hero-image" width="981" height="528">
+
+<section class="articles">
+  <h2 class="articles__heading">Latest Posts</h2>
+
+  <ul class="article-ul">
+    <% data.forEach(post => { %>
+      <li>
+        <a href="/post/<%= post._id %>">
+          <span><%= post.title %></span>
+          <span class="article-list__date"><%= post.createdAt.toDateString() %></span>
+        </a>
+        <div class="post-interactions">
+          <form action="/post/<%= post._id %>/like" method="POST" style="display:inline;">
+            <button type="submit">❤️ Like (<%= post.likes?.length || 0 %>)</button>
+          </form>
+
+    
+          <form action="/post/<%= post._id %>/comment" method="POST" class="comment-form">
+            <label for="comment">Add a Comment:</label>
+            <textarea name="comment" id="comment" required class="comment-textarea"></textarea>
+            <button type="submit">Add Comment</button>
+          </form>
+
+          <div class="comments">
+            <% post.comments.forEach(comment => { %>
+              <div class="comment">
+                <p><strong><%= comment.username %>:</strong> <%= comment.text %></p>
+                <p><small><%= comment.createdAt.toDateString() %></small></p>
+        
+                <form action="/post/<%= post._id %>/comment/<%= comment._id %>/delete" method="POST" style="display:inline;">
+                  <input type="hidden" name="username" value="<%= comment.username %>">
+                  <button type="submit" class="delete-comment-button">Delete</button>
+                </form>
+              </div>
+            <% }) %>
+          </div>
+          
+          </div>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+
+  <% if (nextPage !== null) { %>
+    <a href="/?page=<%= nextPage %>" class="pagination">&lt; View Older Posts</a>
+  <% } %>
+</section>
+
