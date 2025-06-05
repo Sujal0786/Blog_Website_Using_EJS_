@@ -59,3 +59,7 @@ npm start
 **Frontend**: EJS, HTML, CSS
 
 **Database**: MongoDB
+
+
+
+![App Screenshot](SS.png.png)
